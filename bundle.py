@@ -1,10 +1,53 @@
-from typing import Dict
+from typing import Dict, Set
 import json
+import pickle
+
+
+BASE_BUNDLES_FILE = "./bundles_base.json"
+USER_BUNDLES_FILE = "./bundles_user.pkl"
+
+
+def load_user_bundles() -> Set['Bundle']:
+    with open(USER_BUNDLES_FILE, 'rb') as f:
+        return pickle.load(f)
+
+
+def save_user_bundles(bundles: Set['Bundle']):
+    with open(USER_BUNDLES_FILE, 'wb') as f:
+        pickle.dump(bundles, f)
+
+
+def save_base_bundles(bundles: Set['Bundle']):
+    json_string = "["
+
+    for bundle in bundles:
+        json_string = f"{json_string}\n{bundle.to_json_string()},"
+
+    json_string = json_string[:-1]  # remove last comma
+    json_string = f"{json_string}\n]"
+
+    try:
+        with open(BASE_BUNDLES_FILE, 'w') as f:
+            f.write(json_string)
+            print(f"Bundles saved")
+    except OSError as e:
+        print(f"ERROR SAVING ITEMS: {e}")
+
+
+def load_base_bundles() -> Set['Bundle']:
+    bundles = set()
+
+    with open(BASE_BUNDLES_FILE) as f:
+        loaded_bundles = json.load(f)
+        for bundle in loaded_bundles:
+            bundles.add(Bundle.from_json(bundle))
+
+    return bundles
 
 
 class Bundle:
     def __init__(self, name: str, slots_required: int):
-        print(f"Add bundle {name} with {slots_required} slots required")
+        #  print(f"Add bundle {name} with {slots_required} slots required")
         self.name: str = name
         self.slots_required: int = slots_required
         self.slots_filled: int = 0
