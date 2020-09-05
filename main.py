@@ -54,9 +54,9 @@ def main():
         print(e)
 
     while True:
-        print(f"Items:")
-        print(sorted(items))
-        print(bundles)
+        print(f"Bundles:")
+        for i, bundle in enumerate(bundles):
+            print(f"{i}: {bundle}")
 
         print(f"(a)dd items, a(d)d bundle, (q)uit: ")
         user_input = input(": ").lower().strip()

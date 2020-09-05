@@ -10,13 +10,13 @@ class Bundle:
         self.items: Dict[str, int] = dict()
 
     def __str__(self) -> str:
-        return f"<Bundle {self.name} - {self.slots_required} slots required - {len(self.items)} items>"
+        return f"{self.name} - {self.slots_required} slots required - {self.items}"
 
     def __repr__(self) -> str:
-        return str(self)
+        return f"<Bundle {self.name} - {self.slots_required} slots required - {len(self.items)} items>"
 
     def add_item(self, item: str, quantity: int = 1):
-        print(f"Add {item} ({quantity}) to bundle {self.name}")
+        #  print(f"Add {item} ({quantity}) to bundle {self.name}")
         self.items[item] = quantity
 
     def to_json_string(self) -> str:
