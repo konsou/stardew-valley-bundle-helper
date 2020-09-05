@@ -8,7 +8,7 @@ BUNDLES_FILE = "./bundles.json"
 def save_items(items: Set[str]):
     try:
         with open(ITEMS_FILE, 'w') as f:
-            json.dump(list(items), f)
+            json.dump(sorted(items), f, indent=4)
             print(f"Items saved")
     except OSError as e:
         print(f"ERROR SAVING ITEMS: {e}")
@@ -17,7 +17,7 @@ def save_items(items: Set[str]):
 def save_bundles(bundles: Set[str]):
     try:
         with open(BUNDLES_FILE, 'w') as f:
-            json.dump(list(bundles), f)
+            json.dump(sorted(bundles), f, indent=4)
             print(f"Bundles saved")
     except OSError as e:
         print(f"ERROR SAVING ITEMS: {e}")
@@ -41,7 +41,7 @@ def main():
 
     while True:
         print(f"Items:")
-        print(items)
+        print(sorted(items))
 
         print(f"(a)dd items, a(d)d bundle, (q)uit: ")
         user_input = input(": ").lower().strip()
