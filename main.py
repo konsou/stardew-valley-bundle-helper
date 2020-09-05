@@ -89,7 +89,7 @@ def main():
                     except ValueError:
                         quantity = 1
 
-                    new_bundle.add_item(item=item_to_add, quantity=quantity)
+                    new_bundle.add_required_item(item=item_to_add, quantity=quantity)
 
                 bundles.add(new_bundle)
                 save_bundles(bundles)
