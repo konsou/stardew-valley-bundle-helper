@@ -1,4 +1,4 @@
-from typing import Dict, Set
+from typing import Dict, Set, Optional
 import json
 import pickle
 
@@ -45,6 +45,26 @@ def load_base_bundles() -> Set['Bundle']:
     return bundles
 
 
+def needed_items(bundles: Set['Bundle']):
+    items = []
+
+    for bundle in bundles:
+        for item, quantity in bundle.items_remaining.items():
+            items.append((item, quantity, bundle.name))
+
+    return sorted(items)
+
+
+def find_by_name(name: str, bundles: Set['Bundle']) -> Optional['Bundle']:
+    name = name.lower().strip()
+
+    for bundle in bundles:
+        if bundle.name == name:
+            return bundle
+
+    return None
+
+
 class Bundle:
     def __init__(self, name: str, slots_required: int):
         #  print(f"Add bundle {name} with {slots_required} slots required")
@@ -70,6 +90,10 @@ class Bundle:
             if self.items[item] <= quantity and self.items_remaining[item] <= quantity:
                 del self.items_remaining[item]
                 self.slots_filled += 1
+
+                if self.is_finished():
+                    self.items_remaining = dict()
+
                 return True
         except KeyError:
             return False
