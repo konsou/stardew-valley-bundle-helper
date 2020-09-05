@@ -21,7 +21,7 @@ def main():
         # for i, needed in enumerate(needed_items(bundles)):
         #     print(f"{i}: {needed[0]} ({needed[1]}) - {needed[2]}")
 
-        print(f"(a)dd items, a(d)d bundle, (q)uit: ")
+        print(f"number to mark as done, q to quit: ")
         user_input = input(": ").lower().strip()
 
         try:
@@ -31,7 +31,6 @@ def main():
             print(selected_item)
 
             in_bundle = find_by_name(selected_item[2], bundles)
-            print(f"In bundle {in_bundle}")
 
             result = in_bundle.item_done(item=selected_item[0], quantity=selected_item[1])
 
@@ -39,6 +38,11 @@ def main():
                 print(f"Marked as done!")
             else:
                 print(f"ERROR! Wrong item and/or quantity!")
+
+            print(f"In bundle {in_bundle}")
+
+            if in_bundle.is_finished():
+                print(f"Bundle finished!")
 
             save_user_bundles(bundles)
 
